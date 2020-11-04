@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import RoutingConstants from 'src/constants/routing-constants';
 import { CreatePageComponent } from './pages/create-page/create-page.component';
@@ -48,6 +49,8 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild( routes )
   ],
   exports: [ RouterModule ]

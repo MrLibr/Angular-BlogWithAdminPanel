@@ -1,1 +1,57 @@
-<p>login-page works!</p>
+<form
+  class="card"
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+  <h2>Login In Administration Panel</h2>
+  <div
+    [ngClass]="{invalid: validateField(emailField)}"
+    class="form-control"
+  >
+    <label>
+      Email:
+      <input
+        formControlName="email"
+        id="email"
+        type="email"
+      >
+      <div
+        *ngIf="validateField(emailField)"
+        class="validation"
+      >
+        <small *ngIf="emailField.errors.email">Please, Write Correct Email.</small>
+        <small *ngIf="emailField.errors.required">This Field Would Required</small>
+      </div>
+    </label>
+  </div>
+  <div
+    [ngClass]="{invalid: validateField(passwordField)}"
+    class="form-control"
+  >
+    <label>
+      Password:
+      <input
+        formControlName="password"
+        id="password"
+        type="password"
+      >
+      <div
+        *ngIf="validateField(passwordField)"
+        class="validation"
+      >
+        <small *ngIf="passwordField.errors.minlength">
+          This Field Should Have {{passwordField.errors.minlength.requiredLength}} Symbols. Now
+          It Have {{passwordField.errors.minlength.actualLength}}
+          Symbols.
+        </small>
+        <small *ngIf="passwordField.errors.required">This Field Would Required</small>
+      </div>
+    </label>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="form.invalid"
+  >Login</button>
+</form>
