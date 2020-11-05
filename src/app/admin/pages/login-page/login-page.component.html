@@ -4,6 +4,21 @@
   (ngSubmit)="submit()"
 >
   <h2>Login In Administration Panel</h2>
+
+  <div
+    *ngIf="message "
+    class="alert alert-info"
+  >
+    {{message}}
+  </div>
+
+  <div
+    *ngIf="auth.error$ | async as error"
+    class="alert alert-danger"
+  >
+    {{error}}
+  </div>
+
   <div
     [ngClass]="{invalid: validateField(emailField)}"
     class="form-control"
@@ -52,6 +67,6 @@
   <button
     type="submit"
     class="btn btn-primary"
-    [disabled]="form.invalid"
+    [disabled]="form.invalid || isSubmitted"
   >Login</button>
 </form>

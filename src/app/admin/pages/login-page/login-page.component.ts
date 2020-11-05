@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AnswerConstants, ErrorConstants } from 'src/constants/error-constants';
+import FormConstants from 'src/constants/form-constants';
+import RoutingConstants from 'src/constants/routing-constants';
 import { User } from './../../../shared/interfaces/user';
+import { AuthService } from './../../shared/services/auth.service';
 
 @Component( {
   selector: 'app-login-page',
@@ -10,10 +15,24 @@ import { User } from './../../../shared/interfaces/user';
 export class LoginPageComponent implements OnInit {
 
   public form: FormGroup;
+  public isSubmitted: boolean;
+  public message: string;
 
-  constructor () { }
+  constructor (
+    public auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.isSubmitted = false;
+  }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe( params => {
+      if ( params[ ErrorConstants.LOGIN_AGAIN ] ) {
+        this.message = AnswerConstants.LOGIN_AGAIN;
+      }
+    } );
+
     this.form = new FormGroup( {
       email: new FormControl( null, [ Validators.email, Validators.required ] ),
       password: new FormControl( null, [ Validators.minLength( 6 ), Validators.required ] )
@@ -25,15 +44,24 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
+    this.isSubmitted = true;
+
     const data: User = { ...this.form.value };
+    this.auth.login( data ).subscribe( () => {
+      this.form.reset();
+      this.router.navigate(
+        [ RoutingConstants.ADMIN_PAGE, RoutingConstants.ADMIN_DASHBOARD_PAGE ]
+      );
+      this.isSubmitted = false;
+    }, () => this.isSubmitted = false );
   }
 
   get emailField(): FormControl {
-    return this.form.get( 'email' ) as FormControl;
+    return this.form.get( FormConstants.EMAIL ) as FormControl;
   }
 
   get passwordField(): FormControl {
-    return this.form.get( 'password' ) as FormControl;
+    return this.form.get( FormConstants.PASSWORD ) as FormControl;
   }
 
   validateField( field: FormControl ): boolean {

@@ -1,6 +1,6 @@
 enum FormConstants {
   EMAIL = 'email',
-  PASSWORD = 'password'
+  PASSWORD = 'password',
 }
 
 export default FormConstants;

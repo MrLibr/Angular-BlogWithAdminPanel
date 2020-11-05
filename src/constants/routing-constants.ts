@@ -2,6 +2,7 @@ enum RoutingConstants {
   ROOT = '',
   HOME_PAGE = '/',
   POST_PAGE = 'post/',
+  ADMIN_PAGE = '/admin',
   CURRENT_POST_PAGE = 'post/:id',
   ADMIN_LOGIN_PAGE = 'login',
   ADMIN_DASHBOARD_PAGE = 'dashboard',

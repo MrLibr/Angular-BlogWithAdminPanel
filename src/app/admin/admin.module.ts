@@ -3,11 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import RoutingConstants from 'src/constants/routing-constants';
+import { SharedModule } from './../shared/shared.module';
 import { CreatePageComponent } from './pages/create-page/create-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AdminLayoutComponent } from './shared/components/admin-layout/admin-layout.component';
+import { AuthGuardService } from './shared/services/auth.guard';
+import { AuthService } from './shared/services/auth.service';
 
 const routes: Routes = [
   {
@@ -25,15 +28,18 @@ const routes: Routes = [
       },
       {
         path: RoutingConstants.ADMIN_DASHBOARD_PAGE,
-        component: DashboardPageComponent
+        component: DashboardPageComponent,
+        canActivate: [ AuthGuardService ]
       },
       {
         path: RoutingConstants.ADMIN_CREATE_PAGE,
-        component: CreatePageComponent
+        component: CreatePageComponent,
+        canActivate: [ AuthGuardService ]
       },
       {
         path: RoutingConstants.ADMIN_EDIT_PAGE,
-        component: EditPageComponent
+        component: EditPageComponent,
+        canActivate: [ AuthGuardService ]
       },
     ]
   }
@@ -51,8 +57,13 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild( routes )
   ],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
+  providers: [
+    AuthService,
+    AuthGuardService
+  ]
 } )
 export class AdminModule { }
