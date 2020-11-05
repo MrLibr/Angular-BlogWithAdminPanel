@@ -1,0 +1,58 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+  <h1>Create New Post: </h1>
+
+  <div
+    [ngClass]="{invalid: validateField(titleField)}"
+    class="form-control"
+  >
+    <label>
+      Title:
+      <input
+        formControlName="title"
+        id="title"
+        type="text"
+      >
+      <div
+        *ngIf="validateField(titleField)"
+        class="validation"
+      >
+        <small *ngIf="titleField.errors.required">This Field Would Required</small>
+      </div>
+    </label>
+  </div>
+
+  <div class="form-control">
+    <label>Post Content:
+      <quill-editor formControlName="text"></quill-editor>
+    </label>
+  </div>
+
+  <div
+    [ngClass]="{invalid: validateField(authorField)}"
+    class="form-control"
+  >
+    <label>
+      Title:
+      <input
+        formControlName="author"
+        id="author"
+        type="text"
+      >
+      <div
+        *ngIf="validateField(authorField)"
+        class="validation"
+      >
+        <small *ngIf="authorField.errors.required">This Field Would Required</small>
+      </div>
+    </label>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-block btn-dark"
+    [disabled]="form.invalid"
+  >Create Post</button>
+</form>
