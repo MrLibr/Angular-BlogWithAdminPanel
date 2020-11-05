@@ -10,7 +10,7 @@ import UrlConstants from 'src/constants/url-constants';
 import { AnswerConstants } from './../../../../constants/error-constants';
 import { environment } from './../../../../environments/environment';
 
-@Injectable()
+@Injectable( { providedIn: 'root' } )
 export class AuthService {
 
   public error$: Subject<string> = new Subject<string>();

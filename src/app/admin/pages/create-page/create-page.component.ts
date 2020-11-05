@@ -1,14 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
 import Post from 'src/app/shared/interfaces/post';
-import { ErrorConstants } from 'src/constants/error-constants';
 import FormConstants from 'src/constants/form-constants';
-import RoutingConstants from 'src/constants/routing-constants';
 import { PostsService } from './../../../shared/services/posts.service';
-import { AuthService } from './../../shared/services/auth.service';
 
 
 @Component( {
@@ -20,11 +14,7 @@ export class CreatePageComponent implements OnInit {
 
   public form: FormGroup;
 
-  constructor (
-    private posts: PostsService,
-    private auth: AuthService,
-    private router: Router
-  ) { }
+  constructor ( private posts: PostsService ) { }
 
   ngOnInit(): void {
     this.form = new FormGroup( {
@@ -46,7 +36,7 @@ export class CreatePageComponent implements OnInit {
 
     this.posts.create( post ).subscribe( () => {
       this.form.reset();
-    }, this.handleError.bind( this ) );
+    } );
   }
 
   get titleField(): FormControl {
@@ -63,17 +53,5 @@ export class CreatePageComponent implements OnInit {
 
   validateField( field: FormControl ): boolean {
     return field.invalid && field.touched;
-  }
-
-  private handleError( error: HttpErrorResponse ) {
-    if ( error.status === 401 ) {
-      this.auth.logout();
-      this.router.navigate( [ RoutingConstants.ADMIN_PAGE, RoutingConstants.ADMIN_LOGIN_PAGE ], {
-        queryParams: {
-          [ ErrorConstants.AUTHORIZATION_ERROR ]: true
-        }
-      } );
-    }
-    return throwError( error );
   }
 }
