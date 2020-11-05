@@ -5,11 +5,7 @@ import { QuillModule } from 'ngx-quill';
 @NgModule( {
   imports: [
     HttpClientModule,
-    QuillModule.forRoot( {
-      modules: {
-        syntax: true
-      }
-    } )
+    QuillModule.forRoot()
   ],
   exports: [
     HttpClientModule,

@@ -31,6 +31,10 @@ export class LoginPageComponent implements OnInit {
       if ( params[ ErrorConstants.LOGIN_AGAIN ] ) {
         this.message = AnswerConstants.LOGIN_AGAIN;
       }
+
+      if ( params[ ErrorConstants.AUTHORIZATION_ERROR ] ) {
+        this.message = AnswerConstants.AUTHORIZATION_ERROR;
+      }
     } );
 
     this.form = new FormGroup( {
