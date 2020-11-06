@@ -5,6 +5,7 @@ import { AnswerConstants, ErrorConstants } from 'src/constants/error-constants';
 import FormConstants from 'src/constants/form-constants';
 import RoutingConstants from 'src/constants/routing-constants';
 import { User } from './../../../shared/interfaces/user';
+import { FormIncludedComponent } from './../../shared/components/form-included/form-included.component';
 import { AuthService } from './../../shared/services/auth.service';
 
 @Component( {
@@ -12,9 +13,8 @@ import { AuthService } from './../../shared/services/auth.service';
   templateUrl: './login-page.component.html',
   styleUrls: [ './login-page.component.scss' ]
 } )
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent extends FormIncludedComponent implements OnInit {
 
-  public form: FormGroup;
   public isSubmitted: boolean;
   public message: string;
 
@@ -23,6 +23,7 @@ export class LoginPageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    super();
     this.isSubmitted = false;
   }
 
@@ -66,9 +67,5 @@ export class LoginPageComponent implements OnInit {
 
   get passwordField(): FormControl {
     return this.form.get( FormConstants.PASSWORD ) as FormControl;
-  }
-
-  validateField( field: FormControl ): boolean {
-    return field.invalid && field.touched;
   }
 }
