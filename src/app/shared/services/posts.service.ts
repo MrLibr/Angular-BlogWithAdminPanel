@@ -37,4 +37,8 @@ export class PostsService {
           } ) );
       } ) );
   }
+
+  delete( id: string ): Observable<void> {
+    return this.http.delete<void>( `${ UrlConstants.DATA_BASE }/posts/${ id }.json` );
+  }
 }
