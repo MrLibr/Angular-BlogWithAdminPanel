@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import FBAuthResponse from 'src/app/shared/interfaces/fb-auth-response';
+import { FBAuthResponse } from 'src/app/shared/interfaces/fb-responses';
 import { User } from 'src/app/shared/interfaces/user';
 import { ErrorConstants } from 'src/constants/error-constants';
 import FBConstants from 'src/constants/fb-constants';

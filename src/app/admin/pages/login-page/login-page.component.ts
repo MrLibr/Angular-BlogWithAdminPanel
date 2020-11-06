@@ -19,7 +19,7 @@ export class LoginPageComponent implements OnInit {
   public message: string;
 
   constructor (
-    public auth: AuthService,
+    public authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -51,7 +51,7 @@ export class LoginPageComponent implements OnInit {
     this.isSubmitted = true;
 
     const data: User = { ...this.form.value };
-    this.auth.login( data ).subscribe( () => {
+    this.authService.login( data ).subscribe( () => {
       this.form.reset();
       this.router.navigate(
         [ RoutingConstants.ADMIN_PAGE, RoutingConstants.ADMIN_DASHBOARD_PAGE ]

@@ -13,7 +13,7 @@
   </div>
 
   <div
-    *ngIf="auth.error$ | async as error"
+    *ngIf="authService.error$ | async as error"
     class="alert alert-danger"
   >
     {{error}}

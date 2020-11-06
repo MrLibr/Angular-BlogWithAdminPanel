@@ -16,7 +16,7 @@ export class AdminLayoutComponent implements OnInit {
   public dashboardPage: string[];
 
   constructor (
-    public auth: AuthService,
+    public authService: AuthService,
     private router: Router
   ) {
     this.homePage = RoutingConstants.HOME_PAGE;
@@ -29,7 +29,7 @@ export class AdminLayoutComponent implements OnInit {
 
   logout( event: MouseEvent ): void {
     event.preventDefault();
-    this.auth.logout();
+    this.authService.logout();
     this.router.navigate( [ RoutingConstants.ADMIN_PAGE, RoutingConstants.ADMIN_LOGIN_PAGE ] );
   }
 }

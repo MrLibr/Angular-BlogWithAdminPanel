@@ -14,7 +14,7 @@ export class CreatePageComponent implements OnInit {
 
   public form: FormGroup;
 
-  constructor ( private posts: PostsService ) { }
+  constructor ( private postsService: PostsService ) { }
 
   ngOnInit(): void {
     this.form = new FormGroup( {
@@ -34,7 +34,7 @@ export class CreatePageComponent implements OnInit {
       date: new Date()
     };
 
-    this.posts.create( post ).subscribe( () => {
+    this.postsService.create( post ).subscribe( () => {
       this.form.reset();
     } );
   }

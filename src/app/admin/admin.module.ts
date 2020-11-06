@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import RoutingConstants from 'src/constants/routing-constants';
+import { SearchPipe } from './../shared/pipes/search.pipe';
 import { SharedModule } from './../shared/shared.module';
 import { CreatePageComponent } from './pages/create-page/create-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
@@ -50,7 +51,8 @@ const routes: Routes = [
     LoginPageComponent,
     DashboardPageComponent,
     CreatePageComponent,
-    EditPageComponent
+    EditPageComponent,
+    SearchPipe
   ],
   imports: [
     CommonModule,

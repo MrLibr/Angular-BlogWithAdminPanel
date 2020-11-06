@@ -11,15 +11,15 @@ import { AuthService } from './../../admin/shared/services/auth.service';
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor (
-    private auth: AuthService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
-    if ( this.auth.isAuth() ) {
+    if ( this.authService.isAuth() ) {
       req = req.clone( {
         setParams: {
-          auth: this.auth.token
+          auth: this.authService.token
         }
       } );
     }
@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private handleError( error: HttpErrorResponse ) {
     if ( error.status === 401 ) {
-      this.auth.logout();
+      this.authService.logout();
       this.router.navigate( [ RoutingConstants.ADMIN_PAGE, RoutingConstants.ADMIN_LOGIN_PAGE ], {
         queryParams: {
           [ ErrorConstants.AUTHORIZATION_ERROR ]: true
