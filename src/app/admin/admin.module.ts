@@ -11,6 +11,7 @@ import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AdminLayoutComponent } from './shared/components/admin-layout/admin-layout.component';
 import { AuthGuardService } from './shared/services/auth.guard';
+import { FormIncludedComponent } from './shared/components/form-included/form-included.component';
 
 const routes: Routes = [
   {
@@ -52,7 +53,8 @@ const routes: Routes = [
     DashboardPageComponent,
     CreatePageComponent,
     EditPageComponent,
-    SearchPipe
+    SearchPipe,
+    FormIncludedComponent
   ],
   imports: [
     CommonModule,

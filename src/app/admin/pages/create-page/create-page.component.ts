@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Post from 'src/app/shared/interfaces/post';
 import FormConstants from 'src/constants/form-constants';
 import { PostsService } from './../../../shared/services/posts.service';
+import { FormIncludedComponent } from './../../shared/components/form-included/form-included.component';
 
 
 @Component( {
@@ -10,11 +11,11 @@ import { PostsService } from './../../../shared/services/posts.service';
   templateUrl: './create-page.component.html',
   styleUrls: [ './create-page.component.scss' ]
 } )
-export class CreatePageComponent implements OnInit {
+export class CreatePageComponent extends FormIncludedComponent implements OnInit {
 
-  public form: FormGroup;
-
-  constructor ( private postsService: PostsService ) { }
+  constructor ( private postsService: PostsService ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup( {
@@ -49,9 +50,5 @@ export class CreatePageComponent implements OnInit {
 
   get authorField(): FormControl {
     return this.form.get( FormConstants.AUTHOR ) as FormControl;
-  }
-
-  validateField( field: FormControl ): boolean {
-    return field.invalid && field.touched;
   }
 }

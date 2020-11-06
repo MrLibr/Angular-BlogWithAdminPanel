@@ -38,6 +38,18 @@ export class PostsService {
       } ) );
   }
 
+  getById( id: string ): Observable<Post> {
+    return this.http
+      .get<Post>( `${ UrlConstants.DATA_BASE }/posts/${ id }.json` )
+      .pipe( map( ( post: Post ) => {
+        return {
+          ...post,
+          id,
+          date: new Date( post.date )
+        };
+      } ) );
+  }
+
   delete( id: string ): Observable<void> {
     return this.http.delete<void>( `${ UrlConstants.DATA_BASE }/posts/${ id }.json` );
   }
