@@ -1,30 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import AlertConstants from 'src/constants/alert-constants';
 import { AnswerConstants, ErrorConstants } from 'src/constants/error-constants';
 import FormConstants from 'src/constants/form-constants';
 import RoutingConstants from 'src/constants/routing-constants';
+import { AlertService } from '../../shared/services/alert.service';
 import { User } from './../../../shared/interfaces/user';
 import { FormIncludedComponent } from './../../shared/components/form-included/form-included.component';
 import { AuthService } from './../../shared/services/auth.service';
+
 
 @Component( {
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: [ './login-page.component.scss' ]
 } )
-export class LoginPageComponent extends FormIncludedComponent implements OnInit {
+export class LoginPageComponent extends FormIncludedComponent implements OnInit, OnDestroy {
 
-  public isSubmitted: boolean;
   public message: string;
+  private loginSub: Subscription;
 
   constructor (
     public authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alertService: AlertService
   ) {
     super();
-    this.isSubmitted = false;
   }
 
   ngOnInit(): void {
@@ -52,13 +56,21 @@ export class LoginPageComponent extends FormIncludedComponent implements OnInit 
     this.isSubmitted = true;
 
     const data: User = { ...this.form.value };
-    this.authService.login( data ).subscribe( () => {
+
+    this.loginSub = this.authService.login( data ).subscribe( () => {
       this.form.reset();
       this.router.navigate(
         [ RoutingConstants.ADMIN_PAGE, RoutingConstants.ADMIN_DASHBOARD_PAGE ]
       );
       this.isSubmitted = false;
+      this.alertService.success( AlertConstants.SUCCESS_LOGIN );
     }, () => this.isSubmitted = false );
+  }
+
+  ngOnDestroy(): void {
+    if ( this.loginSub ) {
+      this.loginSub.unsubscribe();
+    }
   }
 
   get emailField(): FormControl {

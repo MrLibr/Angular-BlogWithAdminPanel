@@ -34,7 +34,7 @@
     <button
       type="submit"
       class="btn btn-block btn-primary"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || isSubmitted"
     >Update Post</button>
   </form>
 </div>

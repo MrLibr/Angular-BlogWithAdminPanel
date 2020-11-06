@@ -10,8 +10,10 @@ import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.co
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AdminLayoutComponent } from './shared/components/admin-layout/admin-layout.component';
-import { AuthGuardService } from './shared/services/auth.guard';
+import { AlertComponent } from './shared/components/alert/alert.component';
 import { FormIncludedComponent } from './shared/components/form-included/form-included.component';
+import { AlertService } from './shared/services/alert.service';
+import { AuthGuardService } from './shared/services/auth.guard';
 
 const routes: Routes = [
   {
@@ -54,7 +56,8 @@ const routes: Routes = [
     CreatePageComponent,
     EditPageComponent,
     SearchPipe,
-    FormIncludedComponent
+    FormIncludedComponent,
+    AlertComponent
   ],
   imports: [
     CommonModule,
@@ -64,6 +67,9 @@ const routes: Routes = [
     RouterModule.forChild( routes )
   ],
   exports: [ RouterModule ],
-  providers: [ AuthGuardService ]
+  providers: [
+    AuthGuardService,
+    AlertService
+  ]
 } )
 export class AdminModule { }

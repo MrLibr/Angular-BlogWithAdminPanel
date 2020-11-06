@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import Post from 'src/app/shared/interfaces/post';
+import AlertConstants from 'src/constants/alert-constants';
 import FormConstants from 'src/constants/form-constants';
 import { PostsService } from './../../../shared/services/posts.service';
 import { FormIncludedComponent } from './../../shared/components/form-included/form-included.component';
+import { AlertService } from './../../shared/services/alert.service';
 
 
 @Component( {
@@ -11,9 +14,14 @@ import { FormIncludedComponent } from './../../shared/components/form-included/f
   templateUrl: './create-page.component.html',
   styleUrls: [ './create-page.component.scss' ]
 } )
-export class CreatePageComponent extends FormIncludedComponent implements OnInit {
+export class CreatePageComponent extends FormIncludedComponent implements OnInit, OnDestroy {
 
-  constructor ( private postsService: PostsService ) {
+  private createSub: Subscription;
+
+  constructor (
+    private postsService: PostsService,
+    private alertService: AlertService
+  ) {
     super();
   }
 
@@ -30,14 +38,24 @@ export class CreatePageComponent extends FormIncludedComponent implements OnInit
       return;
     }
 
+    this.isSubmitted = true;
+
     const post: Post = {
       ...this.form.value,
       date: new Date()
     };
 
-    this.postsService.create( post ).subscribe( () => {
+    this.createSub = this.postsService.create( post ).subscribe( () => {
+      this.isSubmitted = false;
       this.form.reset();
+      this.alertService.success( AlertConstants.SUCCESS_CREATE_POST );
     } );
+  }
+
+  ngOnDestroy(): void {
+    if ( this.createSub ) {
+      this.createSub.unsubscribe();
+    }
   }
 
   get titleField(): FormControl {

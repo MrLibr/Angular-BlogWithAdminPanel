@@ -9,12 +9,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class FormIncludedComponent implements OnInit {
 
   public form: FormGroup;
+  public isSubmitted: boolean;
 
-  constructor () { }
+  constructor () {
+    this.isSubmitted = false;
+  }
 
   ngOnInit(): void { }
-
-  submit() { }
 
   validateField( field: FormControl ): boolean {
     return field.invalid && field.touched;

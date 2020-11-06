@@ -24,6 +24,10 @@ export class PostsService {
       } ) );
   }
 
+  update( post: Post ): Observable<Post> {
+    return this.http.patch<Post>( `${ UrlConstants.DATA_BASE }/posts/${ post.id }.json`, post );
+  }
+
   getAll(): Observable<Post[]> {
     return this.http
       .get( `${ UrlConstants.DATA_BASE }/posts.json` )

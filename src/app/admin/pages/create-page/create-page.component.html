@@ -53,6 +53,6 @@
   <button
     type="submit"
     class="btn btn-block btn-dark"
-    [disabled]="form.invalid"
+    [disabled]="form.invalid || isSubmitted"
   >Create Post</button>
 </form>
